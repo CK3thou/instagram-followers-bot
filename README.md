@@ -1,82 +1,34 @@
-# instagram-followers-bot
+# Instagram follow report
 
-Functionality: 
+Read-only local report from an official Instagram information export. It compares follower and following lists and does not log in, follow, or unfollow anyone.
 
-- **Info**: Show report
+It reads the usual export shapes:
 
-- **Follow users**: from tag, from location, from a list or follow back who you do not follow back
+- JSON: `followers_1.json` (and `followers_2.json`, …) plus `following.json`
+- HTML: `followers_1.html` plus `following.html`
+- The export `.zip` (files under `connections/followers_and_following` or `followers_and_following`)
 
-- **Unfollow users**: who do not follow you back or all of them
+The report includes:
 
----------------------
+- Accounts you follow who do not follow you back
+- Accounts who follow you whom you do not follow
+- Mutual follows
+- Follow-back percentages for both your following and follower lists
+- Following-to-follower ratio and the difference between the two counts
+- The 50 newest non-mutual follows with dates, when timestamps are included in the export
 
-## Usage: 
-
-**Show report (who follows, unfollows, follows you back):**
-```
-python main.py -u USERNAME -p PASSWORD -o info
-```
-
-**Follow users using the tag you introduce:**
-
-```
-python main.py -u USERNAME -p PASSWORD -o follow-tag -t TAG
-```
-
-**Follow users from a location:**
+## Usage
 
 ```
-python main.py -u USERNAME -p PASSWORD -o follow-location -t LOCATION_ID
+python web_app.py
 ```
 
-**Follow back all the users who you don't follow back:**
-```
-python main.py -u USERNAME -p PASSWORD -o super-followback
-```
+Or run `launch_report.bat` on Windows.
 
-**Follow users from a list:**
+Open `http://127.0.0.1:8765/`. Upload the export ZIP, or select the follower and following JSON/HTML files. Files are parsed in memory and are not saved.
 
-```
-python main.py -u USERNAME -p PASSWORD -o follow-list -t USER_LIST
-```
+Profile links open Instagram in your browser so you can review accounts yourself.
 
-**Unfollow all the users who don't follow you back:**
-```
-python main.py -u USERNAME -p PASSWORD -o super-unfollow
-```
-**NOTE**: Fill "whitelist.txt" file with the accounts you will never want to unfollow
+Press `Ctrl+C` in the terminal to stop the server.
 
-
-**Unfollow all the users:**
-```
-python main.py -u USERNAME -p PASSWORD -o unfollow-all
-```
-**NOTE**: Fill "whitelist.txt" file with the accounts you will never want to unfollow
-
----------------------
-
-## Examples:
-
-*python main.py -u USERNAME -p PASSWORD -o follow-tag -t cat* : **Follow users using the tag 'cat'** 
-
-*python main.py -u USERNAME -p PASSWORD -o follow-location -t 127963847* : **Follow users from Spain** 
-
-*python main.py -u USERNAME -p PASSWORD -o super-followback*: **Now you are following users you didn't follow but they followed you**
-
-*python main.py -u USERNAME -p PASSWORD -o follow-list -t userlist.txt* : **Follow users in each line of userlist.txt** 
-
-*python main.py -u USERNAME -p PASSWORD -o super-unfollow*: **Now you are not following users who don't follow you**
-
-
----------------------
-
-
-## Acknowledgment
-
-The really good repo is the levpasha's one (https://github.com/LevPasha/Instagram-API-python) 
-
----------------------
-
-## Note
-
-Tested both in Python2.x (2.7.15rc1) and Python 3.x (3.6.7)
+Requires Python 3.7 or newer. No extra packages.
